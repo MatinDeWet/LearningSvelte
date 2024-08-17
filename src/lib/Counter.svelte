@@ -3,26 +3,22 @@
 	let count2 = 0;
 
 	// not going to work variables needs to be present on the right hand side of a decleration.
-	$: string = `Count total is ${getTotel()}`;
+	$: string = `Count 2 is ${count2}`;
 
-	function getTotel() {
-		return count1 + count2;
+	//cound 2 display will not work as the reactive statment order matters
+	$: setCount2(count1);
+
+	function setCount2(x) {
+		count2 = x;
 	}
 
 	function increment1() {
 		count1 += 1;
 	}
-	function increment2() {
-		count2 += 1;
-	}
 </script>
 
 <button on:click={increment1}>
 	Clicks {count1}
-</button>
-
-<button on:click={increment2}>
-	Clicks {count2}
 </button>
 
 <h3>{string}</h3>
