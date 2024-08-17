@@ -1,13 +1,8 @@
 <script>
-	let name = 'Svelte';
-	let string = 'Some <strong>string</strong> with html';
+	import Counter from './lib/Counter.svelte';
 </script>
 
-<h1>Hello {name.toLocaleLowerCase()}!</h1>
-<p>{@html string}</p>
+<Counter />
 
 <style>
-	h1 {
-		color: red;
-	}
 </style>
