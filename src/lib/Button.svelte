@@ -9,6 +9,7 @@
 
 <button 
 	on:click
+	{...$$restProps}
 	style:--buttonBgColor={bgColor}
 	style:--buttonTextColor={textColor}
 	class:size-lg={size === 'large'} 
@@ -39,6 +40,14 @@
 			margin-right: 10px;
 		}
 		&:hover{
+			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
+		}
+		&:disabled{
+			opacity: 0.6;
+			cursor: not-allowed;
+			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
+		}
+		&:disabled:active{
 			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
 		}
 		&:active{

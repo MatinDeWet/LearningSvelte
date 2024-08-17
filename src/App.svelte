@@ -7,7 +7,12 @@
 
 <Button on:click|once={(event) => {
 		alert(true);
-	}} let:isLeftHovered size="large" shadow>
+	}} 
+	let:isLeftHovered 
+	size="large" 
+	shadow
+	disabled
+	>
 	<span slot="leftContent">
 		{#if isLeftHovered}
 		<FaAngellist/>
