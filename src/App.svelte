@@ -2,12 +2,15 @@
 	import Button from './lib/Button.svelte';
 	import FaAngellist from 'svelte-icons/fa/FaAngellist.svelte'
 	import FaAllergies from 'svelte-icons/fa/FaAllergies.svelte'
+	import { prevent_default } from 'svelte/internal';
 </script>
 
-<Button let:isLeftHovered size="large" shadow>
-	<span slot="leftContent" let:x>
+<Button on:click|once={(event) => {
+		alert(true);
+	}} let:isLeftHovered size="large" shadow>
+	<span slot="leftContent">
 		{#if isLeftHovered}
-		<FaAngellist/> {x}
+		<FaAngellist/>
 		{:else}
 		<FaAllergies/>
 		{/if}
