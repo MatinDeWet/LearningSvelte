@@ -2,11 +2,9 @@
 	let count1 = 0;
 	let count2 = 0;
 
-	// not going to work variables needs to be present on the right hand side of a decleration.
-	$: string = `Count 2 is ${count2}`;
-
-	//cound 2 display will not work as the reactive statment order matters
 	$: setCount2(count1);
+
+	$: string = `Count 2 is ${count2}`;
 
 	function setCount2(x) {
 		count2 = x;
