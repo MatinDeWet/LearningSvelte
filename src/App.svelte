@@ -1,14 +1,8 @@
 <script>
-	import Counter from './lib/Counter.svelte';
-
-	// you can send a object though with the same prop names as a component by spreading them with ...
-	const props = {
-		maxCount: 10,
-		initialCount: 2
-	};
+	import Button from './lib/Button.svelte';
 </script>
 
-<Counter {...props} x="2" />
+<Button>Button</Button>
 
 <style>
 </style>
