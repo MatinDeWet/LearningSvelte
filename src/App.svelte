@@ -8,7 +8,7 @@
 	};
 </script>
 
-<Counter {...props} />
+<Counter {...props} x="2" />
 
 <style>
 </style>

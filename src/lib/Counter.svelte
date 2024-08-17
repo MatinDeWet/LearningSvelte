@@ -2,6 +2,9 @@
 	export let initialCount = 0;
 	export let maxCount = undefined;
 
+	//ou can access props and rest props of a component but use them sparingly as they can cause preformance issues.
+	console.log($$props, $$restProps);
+
 	let count = initialCount;
 
 	function increment() {
