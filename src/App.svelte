@@ -3,6 +3,8 @@
 	
 	import { v4 as uuid} from "uuid"
 
+	let todoList;
+
 	let todos =[
 		{
 			id: uuid(),
@@ -27,12 +29,17 @@
 	]
 
 	function handleAddTodo(event){
-
-		todos = [...todos,{
+		event.preventDefault();
+		setTimeout(() => {
+			todos = [...todos,{
 			id: uuid(),
 			title: event.detail.title,
 			completed: false
 		}];
+
+		todoList.clearInput();
+		}, 1000);
+
 	}
 
 	function handleRemoveTodo(event){
@@ -52,12 +59,15 @@
 
 <TodoList 
 	{todos} 
+	bind:this={todoList}
 	on:addtodo={handleAddTodo}
 	on:removetodo={handleRemoveTodo}
 	on:toggletodo={handleToggleTodo}
 >
 
 </TodoList>
+
+<button on:click={() => { todoList.focusInput()}}>Focus input</button>
 
 <style>
 </style>
