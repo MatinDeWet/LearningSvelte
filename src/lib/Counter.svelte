@@ -1,25 +1,19 @@
 <script>
-	let count1 = 0;
-	let count2 = 0;
+	export let initialCount = 0;
+	export let maxCount = undefined;
 
-	$: setCount2(count1);
+	let count = initialCount;
 
-	$: string = `Count 2 is ${count2}`;
+	function increment() {
+		if (count == maxCount) return;
 
-	function setCount2(x) {
-		count2 = x;
-	}
-
-	function increment1() {
-		count1 += 1;
+		count += 1;
 	}
 </script>
 
-<button on:click={increment1}>
-	Clicks {count1}
+<button on:click={increment}>
+	Clicks {count}
 </button>
-
-<h3>{string}</h3>
 
 <style>
 	button {
