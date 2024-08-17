@@ -3,7 +3,7 @@
 	
 	import { v4 as uuid} from "uuid"
 
-	const todos =[
+	let todos =[
 		{
 			id: uuid(),
 			title : 'Todo 1',
@@ -25,9 +25,12 @@
 			completed: false
 		}        
 	]
+
+	$: console.log(todos);
 </script>
 
-<TodoList {todos}>
+<h2>{todos.length} Todos</h2>
+<TodoList bind:todos>
 
 </TodoList>
 
