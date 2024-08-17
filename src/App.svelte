@@ -26,11 +26,13 @@
 		}        
 	]
 
-	$: console.log(todos);
+	function handleAddTodo(event){
+		event.preventDefault();
+		console.log(event.detail.title)
+	}
 </script>
 
-<h2>{todos.length} Todos</h2>
-<TodoList bind:todos>
+<TodoList {todos} on:addtodo={handleAddTodo}>
 
 </TodoList>
 
