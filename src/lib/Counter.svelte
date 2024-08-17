@@ -2,21 +2,17 @@
 	export let initialCount = 0;
 	export let maxCount = undefined;
 
-	//ou can access props and rest props of a component but use them sparingly as they can cause preformance issues.
 	console.log($$props, $$restProps);
 
 	let count = initialCount;
 
 	function increment() {
-		if (count == maxCount) return;
-
+		if (count === maxCount) return;
 		count += 1;
 	}
 </script>
 
-<button on:click={increment}>
-	Clicks {count}
-</button>
+<button on:click={increment}>Clicks {count}</button>
 
 <style>
 	button {
