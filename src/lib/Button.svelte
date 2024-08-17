@@ -3,6 +3,8 @@
 	export let shadow = false;
 	export let bgColor = 'inherit';
 	export let textColor = 'inherit';
+
+	let isLeftHovered;
 </script>
 
 <button 
@@ -15,11 +17,11 @@
 	>
 
 	{#if ($$slots.leftContent)}
-		<div style:width="20px" class="left-content">
-			<slot name="leftContent"></slot>
+		<div style:width="20px" class="left-content" on:mouseenter={() => isLeftHovered = true} on:mouseleave={() => isLeftHovered = false}>
+			<slot name="leftContent" x="y"></slot>
 		</div>
 	{/if}
-	<slot>Fallback</slot>
+	<slot {isLeftHovered}>Fallback</slot>
 </button>
 
 <style lang="scss">
