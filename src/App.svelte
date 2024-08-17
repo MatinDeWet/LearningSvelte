@@ -1,11 +1,14 @@
 <script>
 	import Counter from './lib/Counter.svelte';
 
-	//if variable is the same name as a component prop name you dont need to write var={something}
-	const maxCount = 6;
+	// you can send a object though with the same prop names as a component by spreading them with ...
+	const props = {
+		maxCount: 10,
+		initialCount: 2
+	};
 </script>
 
-<Counter initialCount={3} {maxCount} />
+<Counter {...props} />
 
 <style>
 </style>
