@@ -1,27 +1,35 @@
 <script>
-	import Button from './lib/Button.svelte';
-	import FaAngellist from 'svelte-icons/fa/FaAngellist.svelte'
-	import FaAllergies from 'svelte-icons/fa/FaAllergies.svelte'
-	import { prevent_default } from 'svelte/internal';
+	import TodoList from "./lib/TodoList.svelte";
+	
+	import { v4 as uuid} from "uuid"
+
+	const todos =[
+		{
+			id: uuid(),
+			title : 'Todo 1',
+			completed: true
+		},
+		{
+			id: uuid(),
+			title : 'Todo 2',
+			completed: true
+		},
+		{
+			id: uuid(),
+			title : 'Todo 3',
+			completed: false
+		},
+		{
+			id: uuid(),
+			title : 'Todo 4',
+			completed: false
+		}        
+	]
 </script>
 
-<Button on:click|once={(event) => {
-		alert(true);
-	}} 
-	let:isLeftHovered 
-	size="large" 
-	shadow
-	disabled
-	>
-	<span slot="leftContent">
-		{#if isLeftHovered}
-		<FaAngellist/>
-		{:else}
-		<FaAllergies/>
-		{/if}
-	</span>
-	Button Text
-</Button>
+<TodoList {todos}>
+
+</TodoList>
 
 <style>
 </style>
