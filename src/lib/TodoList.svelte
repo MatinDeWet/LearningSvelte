@@ -2,7 +2,11 @@
 
 <script>
 	import Button from "./Button.svelte";
-    import {createEventDispatcher } from "svelte"
+    import {createEventDispatcher, onMount } from "svelte"
+
+    onMount(() => {
+        console.log('TodoList mounted')
+    })
 
     export let todos = [];
 
@@ -39,7 +43,6 @@
 <div class="todo-list-wrapper">
     <ul>
         {#each todos as {id, title, completed} (id)}
-            {@debug id, title, completed}
             <li>
                 <label>
                     <input on:input={(event) => { event.currentTarget.checked = completed; handleToggleTodo(id, !completed)}} type="checkbox" checked={completed} />
