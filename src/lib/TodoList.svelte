@@ -39,6 +39,7 @@
 <div class="todo-list-wrapper">
     <ul>
         {#each todos as {id, title, completed} (id)}
+            {(console.log(id)), ''}
             <li>
                 <label>
                     <input on:input={(event) => { event.currentTarget.checked = completed; handleToggleTodo(id, !completed)}} type="checkbox" checked={completed} />
