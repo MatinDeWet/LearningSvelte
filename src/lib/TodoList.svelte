@@ -22,10 +22,19 @@
     })
 
     afterUpdate(() => {
-        console.log(listDiv.offsetHeight)
+        if(autoscroll){
+            listDiv.scrollTo(0, listDiv.scrollHeight)
+            autoscroll = false;
+        }
     })
 
     export let todos = [];
+    let prevTodos = todos;
+
+    $:{
+        autoscroll = prevTodos.length < todos.length;
+        prevTodos = todos;
+    }
 
     export function clearInput(){
         inputText = '';
@@ -36,7 +45,7 @@
     }
 
     let inputText = "";
-    let input, listDiv;
+    let input, listDiv, autoscroll;
 
     const dispatch = createEventDispatcher();
 
@@ -80,5 +89,8 @@
 
 
 <style>
-
+    .todo-list{
+        max-height: 150px;
+        overflow: auto;
+    }
 </style>
