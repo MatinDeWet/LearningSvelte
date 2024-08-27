@@ -5,19 +5,15 @@
     import {createEventDispatcher, onDestroy, onMount, beforeUpdate, afterUpdate } from "svelte"
 
     onMount(() => {
-        console.log('TodoList mounted')
         return () => {
-            console.log('TodoList destroyed 2')
         }
     })
 
     onDestroy(() => {
-        console.log('TodoList destroyed')
     })
 
     beforeUpdate(() => {
         if(listDiv){
-            console.log(listDiv.offsetHeight)
         }
     })
 

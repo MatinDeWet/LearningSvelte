@@ -1,7 +1,7 @@
 <script>
 	import TodoList from "./lib/TodoList.svelte";
-	
 	import { v4 as uuid} from "uuid"
+	import { tick } from "svelte";
 
 	let todoList;
 	let showList = true;
@@ -29,18 +29,20 @@
 		}        
 	]
 
-	function handleAddTodo(event){
+	async function handleAddTodo(event){
 		event.preventDefault();
-		setTimeout(() => {
-			todos = [...todos,{
+		console.log(document.querySelectorAll('.todo-list ul li'))
+
+		todos = [...todos,{
 			id: uuid(),
 			title: event.detail.title,
 			completed: false
 		}];
 
-		todoList.clearInput();
-		}, 1000);
+		await tick();
 
+		console.log(document.querySelectorAll('.todo-list ul li'))
+		todoList.clearInput();
 	}
 
 	function handleRemoveTodo(event){
