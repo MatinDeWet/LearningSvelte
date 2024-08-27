@@ -1,93 +1,107 @@
-<svelte:options immutable={true}/>
+<svelte:options immutable={true} />
 
 <script>
-	import Button from "./Button.svelte";
-    import {createEventDispatcher, onDestroy, onMount, beforeUpdate, afterUpdate } from "svelte"
+  import Button from './Button.svelte';
+  import { createEventDispatcher, afterUpdate } from 'svelte';
+  import FaRegTrashAlt from 'svelte-icons/fa/FaRegTrashAlt.svelte';
 
-    onMount(() => {
-        return () => {
-        }
-    })
+  afterUpdate(() => {
+    if (autoscroll) listDiv.scrollTo(0, listDivScrollHeight);
+    autoscroll = false;
+  });
 
-    onDestroy(() => {
-    })
+  export let todos = [];
+  let prevTodos = todos;
+  let inputText = '';
+  let input, listDiv, autoscroll, listDivScrollHeight;
 
-    beforeUpdate(() => {
-        if(listDiv){
-        }
-    })
+  const dispatch = createEventDispatcher();
 
-    afterUpdate(() => {
-        if(autoscroll){
-            listDiv.scrollTo(0, listDivScrollHeight)
-            autoscroll = false;
-        }
-    })
+  $: {
+    autoscroll = todos.length > prevTodos.length;
+    prevTodos = todos;
+  }
 
-    export let todos = [];
-    let prevTodos = todos;
+  export function clearInput() {
+    inputText = '';
+  }
+  export function focusInput() {
+    input.focus();
+  }
 
-    $:{
-        autoscroll = prevTodos.length < todos.length;
-        prevTodos = todos;
+  function handleAddTodo() {
+    const isNotCancelled = dispatch(
+      'addtodo',
+      {
+        title: inputText
+      },
+      {
+        cancelable: true
+      }
+    );
+    if (isNotCancelled) {
+      inputText = '';
     }
+  }
 
-    export function clearInput(){
-        inputText = '';
-    }
+  function handleRemoveTodo(id) {
+    dispatch('removetodo', {
+      id
+    });
+  }
 
-    export function focusInput(){
-        input.focus()
-    }
-
-    let inputText = "";
-    let input, listDiv, autoscroll, listDivScrollHeight;
-
-    const dispatch = createEventDispatcher();
-
-    function handleAddTodo(){
-        const isNotCancelled =  dispatch('addtodo', {title : inputText}, {cancelable:true})
-
-        if(isNotCancelled){
-            inputText = "";
-        }
-    }
-
-    function handleRemoveTodo(id){
-        dispatch('removetodo', { id })
-    }
-
-    function handleToggleTodo(id, value){
-        dispatch('toggletodo', { id , value })
-    }
+  function handleToggleTodo(id, value) {
+    dispatch('toggletodo', {
+      id,
+      value
+    });
+  }
 </script>
+
 <div class="todo-list-wrapper">
-    <div class="todo-list" bind:this={listDiv}>
-        <div bind:offsetHeight={listDivScrollHeight}>
-            <ul>
-                {#each todos as {id, title, completed} (id)}
-                    <li>
-                        <label>
-                            <input on:input={(event) => { event.currentTarget.checked = completed; handleToggleTodo(id, !completed)}} type="checkbox" checked={completed} />
-                            {title}
-                        </label>
-                        <button on:click={() => handleRemoveTodo(id)}>Remove</button>
-                    </li>
-                {/each}
-            </ul>
-        </div>
+  <div class="todo-list" bind:this={listDiv}>
+    <div bind:offsetHeight={listDivScrollHeight}>
+      {#if todos.length === 0}
+        <p class="no-items-text">No todos yet</p>
+      {:else}
+        <ul>
+          {#each todos as { id, title, completed } (id)}
+            <li class:completed>
+              <label>
+                <input
+                  on:input={(event) => {
+                    event.currentTarget.checked = completed;
+                    handleToggleTodo(id, !completed);
+                  }}
+                  type="checkbox"
+                  checked={completed}
+                />
+                {title}
+              </label>
+              <button
+                class="remove-todo-button"
+                aria-label="Remove todo: {title}"
+                on:click={() => handleRemoveTodo(id)}
+              >
+                <span style:width="10px" style:display="inline-block">
+                  <FaRegTrashAlt />
+                </span>
+              </button>
+            </li>
+          {/each}
+        </ul>
+      {/if}
     </div>
-    <form class="add-todo-form" on:submit|preventDefault={handleAddTodo}>
-        <input bind:this={input} bind:value={inputText}/>
-        <Button type="submit" disabled={!inputText}>Add</Button>
-    </form>
+  </div>
+  <form class="add-todo-form" on:submit|preventDefault={handleAddTodo}>
+    <input bind:this={input} bind:value={inputText} placeholder="New Todo" />
+    <Button type="submit" disabled={!inputText}>Add</Button>
+  </form>
 </div>
 
-
-
 <style>
-    .todo-list{
-        max-height: 150px;
-        overflow: auto;
-    }
+  .todo-list {
+    max-height: 150px;
+    overflow: auto;
+  }
 </style>

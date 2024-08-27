@@ -1,5 +1,5 @@
 <script>
-	export let size = "small";
+	export let size = 'small';
 	export let shadow = false;
 	export let bgColor = 'inherit';
 	export let textColor = 'inherit';
@@ -7,20 +7,23 @@
 	let isLeftHovered;
 </script>
 
-<button 
+<button
 	on:click
-	{...$$restProps}
 	style:--buttonBgColor={bgColor}
 	style:--buttonTextColor={textColor}
-	class:size-lg={size === 'large'} 
+	class:size-lg={size === 'large'}
 	class:size-sm={size === 'small'}
 	class:has-left={$$slots.leftContent}
 	class:shadow
-	>
-
-	{#if ($$slots.leftContent)}
-		<div style:width="20px" class="left-content" on:mouseenter={() => isLeftHovered = true} on:mouseleave={() => isLeftHovered = false}>
-			<slot name="leftContent"></slot>
+	{...$$restProps}
+>
+	{#if $$slots.leftContent}
+		<div
+			class="left-content"
+			on:mouseenter={() => (isLeftHovered = true)}
+			on:mouseleave={() => (isLeftHovered = false)}
+		>
+			<slot name="leftContent" />
 		</div>
 	{/if}
 	<slot {isLeftHovered}>Fallback</slot>
@@ -36,32 +39,28 @@
 		font-weight: bold;
 		border-radius: 5px;
 		cursor: pointer;
-		.left-content{
+		.left-content {
 			margin-right: 10px;
 		}
-		&:hover{
-			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
-		}
-		&:disabled{
+		&:disabled {
 			opacity: 0.6;
 			cursor: not-allowed;
-			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
 		}
-		&:disabled:active{
-			background-image: linear-gradient(rgba(0,0,0,0.4) 0 0);
+		&:hover {
+			background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0 0);
 		}
-		&:active{
-			background-image: linear-gradient(rgba(255,255,255,0.1) 0 0);
+		&:active {
+			background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0 0);
 		}
-		&.size-sm{
+		&.size-sm {
 			padding: 15px 20px;
 		}
-		&.size-lg{
+		&.size-lg {
 			padding: 20px 25px;
 			font-size: 20px;
 		}
-		&.shadow{
-			box-shadow: 0 0 10px rgba(1,1,1,0.3);
+		&.shadow {
+			box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
 		}
 	}
 </style>
