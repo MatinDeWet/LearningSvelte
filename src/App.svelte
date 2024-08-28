@@ -2,6 +2,7 @@
 	import TodoList from './lib/TodoList.svelte';
 	import { v4 as uuid } from 'uuid';
 	import { tick, onMount } from 'svelte';
+	import { identity } from 'svelte/internal';
 
 	let todoList;
 	let showList = true;
@@ -72,13 +73,34 @@
 		disabledItems = disabledItems.filter((itemId) => itemId !== id);
 	}
 
-	function handleToggleTodo(event) {
-		todos = todos.map((todo) => {
-			if (todo.id === event.detail.id) {
-				return { ...todo, completed: event.detail.value };
+	async function handleToggleTodo(event) {
+		const id = event.detail.id;
+		const value = event.detail.value;
+		if (disabledItems.includes(id)) return;
+		disabledItems = [...disabledItems, id];
+		await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+			method: 'PATCH',
+			body: JSON.stringify({
+				completed: value
+			}),
+			headers: {
+				'Content-type': 'application/json; charset=UTF-8'
 			}
-			return { ...todo };
+		}).then(async (response) => {
+			if (response.ok) {
+				const updatedTodo = await response.json();
+				todos = todos.map((todo) => {
+					if (todo.id === id) {
+						return updatedTodo;
+					}
+					return { ...todo };
+				});
+			} else {
+				alert('An error has occurred.');
+			}
 		});
+
+		disabledItems = disabledItems.filter((itemId) => itemId !== id);
 	}
 </script>
 
@@ -98,7 +120,11 @@
 			on:addtodo={handleAddTodo}
 			on:removetodo={handleRemoveTodo}
 			on:toggletodo={handleToggleTodo}
-		/>
+			let:todo
+			let:index
+		>
+			<svelte:fragment slot="title">{index + 1} - {todo.title}</svelte:fragment>
+		</TodoList>
 	</div>
 {/if}
 
