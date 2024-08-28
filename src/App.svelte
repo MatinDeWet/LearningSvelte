@@ -2,7 +2,8 @@
 	import TodoList from './lib/TodoList.svelte';
 	import { v4 as uuid } from 'uuid';
 	import { tick, onMount } from 'svelte';
-	import { identity } from 'svelte/internal';
+	import { slide, blur } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
 
 	let todoList;
 	let showList = true;
@@ -109,7 +110,15 @@
 	Show/Hide list
 </label>
 {#if showList}
-	<div style:max-width="400px">
+	<div
+		in:slide={{ duration: 700, easing: cubicInOut }}
+		out:blur={{ amount: 10, duration: 700 }}
+		on:introstart={() => console.log('introstart')}
+		on:introend={() => console.log('introend')}
+		on:outrostart={() => console.log('outrostart')}
+		on:outroend={() => console.log('outroend')}
+		style:max-width="400px"
+	>
 		<TodoList
 			{todos}
 			{error}
