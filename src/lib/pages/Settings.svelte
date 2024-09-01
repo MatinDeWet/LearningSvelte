@@ -8,43 +8,33 @@
 <button
 	on:click={() => {
 		settings.toggleColorScheme();
-	}}>Toggle color Scheme</button
+	}}>Toggle Color Scheme</button
 >
-<br />
 <button
 	on:click={() => {
 		settings.updateSetting('language', Math.random());
-	}}
+	}}>Update language</button
 >
-	Update Language
-</button>
-<br />
 <button
 	on:click={() => {
 		settings.reset();
-	}}
+	}}>Reset Settings</button
 >
-	Reset Settings
-</button>
 <br />
-
-Direction: {$direction}
+{$direction}
 <br />
-
-Color Scheme: {$settings.colorScheme}
+{$settings.colorScheme}
 <br />
-Language: {$settings.language}
+{$settings.language}
 <br />
-
 <label>
-	<input type="radio" name="colorScheme" value="dark" bind:group={$settings.colorScheme} /> Dark
-	<input type="radio" name="colorScheme" value="light" bind:group={$settings.colorScheme} /> Light
+	<input type="radio" bind:group={$settings.colorScheme} name="colorScheme" value="dark" /> Dark
+</label>
+<label>
+	<input type="radio" bind:group={$settings.colorScheme} name="colorScheme" value="light" /> Light
 </label>
 
-<br />
-
 <select bind:value={$settings.language}>
-	{#each ['en', 'ar'] as lang}
-		<option value={lang} selected={$settings.language === lang}>{lang}</option>
-	{/each}
+	<option value="en">English</option>
+	<option value="ar">Arabic</option>
 </select>

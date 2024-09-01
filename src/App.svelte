@@ -8,7 +8,6 @@
 
 	function onRouteChange() {
 		const path = window.location.hash.slice(1);
-
 		if (path === '/') {
 			page = 'home';
 		} else if (path === '/settings') {
@@ -21,19 +20,18 @@
 	onMount(onRouteChange);
 </script>
 
+<Head />
 <svelte:window on:hashchange={onRouteChange} />
 
 <nav>
 	<a href="#/">Home</a>
-	<a href="#/settings">Settings</a>
+	<a href="#/settings">Setting</a>
 </nav>
 
-<Head />
-
-{#if page === 'settings'}
-	<Settings />
-{:else if page === 'home'}
+{#if page === 'home'}
 	<Home />
+{:else if page === 'settings'}
+	<Settings />
 {/if}
 
 <style>
